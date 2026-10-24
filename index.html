@@ -99,7 +99,7 @@
     color:var(--ink-dim); transition:color .15s, background-color .15s;
   }
   .nav-links a:hover, .nav-links a.is-active{ color:var(--cream); background:rgba(255,241,214,.09); }
-  .nav-cta{ display:none; min-height:44px; padding:.6rem 1.15rem; font-size:.98rem; box-shadow:0 4px 0 var(--chili); }
+  .nav-cta{ display:none; white-space:nowrap; min-height:44px; padding:.6rem 1.15rem; font-size:.98rem; box-shadow:0 4px 0 var(--chili); }
 
   .burger{
     width:46px; height:46px; display:grid; place-items:center; background:none; border:0; cursor:pointer;
@@ -130,7 +130,7 @@
   }
   .drawer .btn{ width:100%; margin-top:1.1rem; }
 
-  @media (min-width:900px){
+  @media (min-width:1060px){
     .nav-links{ display:flex; }
     .nav-cta{ display:inline-flex; }
     .burger, .drawer{ display:none; }
@@ -149,16 +149,16 @@
   .hero-copy{ position:relative; z-index:2; }
 
   .hero h1{
-    font-size:clamp(2.9rem, 11.5vw, 6.4rem);
-    color:var(--cream);
-    text-shadow:.045em .045em 0 var(--chili);
+    display:flex; flex-direction:column; gap:.12em; font-size:clamp(3.2rem, 14.5vw, 5.4rem); line-height:1;
+    color:var(--cream); text-shadow:.04em .04em 0 var(--chili);
+    animation:fadeUp .8s .05s cubic-bezier(.2,.9,.25,1) both;
   }
-  .hero h1 .line{ display:block; overflow:hidden; padding-bottom:.08em; }
-  .hero h1 .line > span{ display:block; animation:slam .8s cubic-bezier(.2,.9,.25,1) both; }
-  .hero h1 .line:nth-child(2) > span{ animation-delay:.12s; }
-  @keyframes slam{ from{ transform:translateY(105%) rotate(2deg); } to{ transform:none; } }
-
-  .hero-sub{ margin-top:1.6rem; max-width:34rem; font-size:clamp(1.1rem, 2.6vw, 1.3rem); color:var(--ink-dim); }
+  .hero h1 small{ font:400 .36em/1.1 var(--f-display); color:var(--mustard); text-shadow:none; letter-spacing:.05em; }
+  .hero-tag{
+    margin-top:1.4rem; font:800 clamp(1.4rem, 5.8vw, 2rem)/1.2 var(--f-body); color:var(--cream);
+    animation:fadeUp .7s .22s cubic-bezier(.2,.9,.25,1) both;
+  }
+  .hero-sub{ margin-top:.8rem; max-width:34rem; font-size:clamp(1.1rem, 2.6vw, 1.3rem); color:var(--ink-dim); }
   .hero-sub b{ color:var(--cream); font-weight:700; }
   .hero-actions{ margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; align-items:center; }
   .hero-actions .btn-wa{ animation:fadeUp .6s .55s both; }
@@ -193,7 +193,8 @@
     .hero{ padding:calc(var(--nav-h) + 4rem) 0 5.5rem; min-height:min(100svh, 860px); display:flex; align-items:center; }
     .hero .wrap{ width:100%; }
     .hero-grid{ grid-template-columns:1.15fr .85fr; gap:3.5rem; }
-    .hero h1{ font-size:clamp(3.4rem, 6vw, 5.4rem); }
+    .hero h1{ font-size:clamp(4.6rem, 8vw, 7.4rem); }
+    .hero-tag{ font-size:clamp(1.8rem, 2.6vw, 2.4rem); }
   }
 
   /* ---------- Secciones ---------- */
@@ -306,7 +307,7 @@
 
   /* ---------- Barra y hoja del pedido ---------- */
   .cartbar{
-    position:fixed; left:12px; right:92px; bottom:16px; z-index:46; overflow:hidden;
+    position:fixed; left:12px; right:12px; bottom:16px; z-index:46; overflow:hidden;
     border-radius:30px; background:var(--cream); color:var(--coal); box-shadow:0 8px 20px rgba(0,0,0,.5);
     transform:translateY(160%); opacity:0; pointer-events:none;
     transition:transform .5s cubic-bezier(.2,.9,.25,1), opacity .3s;
@@ -335,12 +336,12 @@
     min-width:36px; height:36px; border-radius:50%; background:#c3261c; color:#fff; flex:none;
     display:grid; place-items:center; font:700 1rem/1 var(--f-body);
   }
-  .cb-toggle .lbl{ flex:1; font-weight:700; line-height:1.15; min-width:0; }
+  .cb-toggle .lbl{ flex:1; font-weight:700; line-height:1.15; min-width:0; white-space:nowrap; }
   .cb-toggle .lbl small{ display:block; font:400 1.15rem/1.1 var(--f-display); }
   .cb-toggle .chev{ stroke:var(--coal); width:24px; height:24px; }
   .cartbar.expanded .cb-toggle .chev{ transform:rotate(180deg); }
   .cb-go{
-    border:0; cursor:pointer; background:var(--coal); color:var(--cream); padding:.8rem 1rem; border-radius:999px;
+    border:0; cursor:pointer; background:var(--coal); color:var(--cream); padding:.8rem .9rem; border-radius:999px;
     font:700 .95rem/1 var(--f-body); white-space:nowrap; min-height:44px;
   }
   .cb-x{
@@ -361,7 +362,15 @@
   body.has-cart.cb-min .cb-mini{ display:grid; animation:stepIn .35s cubic-bezier(.2,.9,.25,1) both; }
   body.cb-min .cartbar{ display:none; }
   body.cart-open .cb-mini{ display:none !important; }
+  @media (max-width:380px){
+    .cb-row{ gap:.25rem; padding-left:.5rem; }
+    .cb-toggle{ gap:.45rem; }
+    .cb-toggle .count{ min-width:32px; height:32px; }
+    .cb-go{ padding:.7rem .75rem; font-size:.9rem; }
+    .cb-toggle .chev{ width:20px; height:20px; }
+  }
   body.has-cart .fab-bubble{ display:none; }
+  body.has-cart:not(.cb-min) .fab{ display:none; }
   body.cart-open .fab, body.cart-open .cartbar{ display:none; }
   @media (min-width:900px){
     .cartbar{ left:50%; right:auto; width:min(540px, calc(100% - 220px)); translate:-50% 0; }
@@ -782,12 +791,10 @@
 <section class="hero" id="inicio">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <h1>
-        <span class="line"><span>¡No te quedes</span></span>
-        <span class="line"><span>con las ganas!</span></span>
-      </h1>
+      <h1>Chichos<small>Bar &amp; Grill</small></h1>
+      <p class="hero-tag">¡No te quedes con las ganas!</p>
       <p class="hero-sub">
-        <b>Costillas BBQ, alitas, hamburguesas y bandejitas</b> con todo el sabor de Chichos. Pídelas por WhatsApp o ven a probarlas en Pasaje.
+        <b>Costillas BBQ, alitas, hamburguesas y bandejitas.</b> Pídelas por WhatsApp o ven a probarlas en Pasaje.
       </p>
       <div class="hero-actions">
         <a class="btn btn-wa" href="https://wa.me/593983040897?text=Hola%20Chichos%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">
@@ -1131,7 +1138,7 @@
   burger.addEventListener('click', function(){ setDrawer(!drawer.classList.contains('open')); });
   drawer.addEventListener('click', function(e){ if (e.target.closest('a')) setDrawer(false); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setDrawer(false); });
-  window.matchMedia('(min-width:900px)').addEventListener('change', function(){ setDrawer(false); });
+  window.matchMedia('(min-width:1060px)').addEventListener('change', function(){ setDrawer(false); });
 
   /* ---- Enlace activo ---- */
   var links = document.querySelectorAll('.nav-links a');
@@ -1389,18 +1396,25 @@
   var send = document.getElementById('send'), opener = null;
   function mode(){ return form.elements.mode.value; }
   function buildLink(){
-    var t = 'Hola Chichos, quiero hacer este pedido:\n\n';
+    var del = mode() === 'delivery';
+    var t = '🍔 *NUEVO PEDIDO*\n_Chichos Bar & Grill_\n\n';
+    t += '🛒 *Mi pedido*\n';
     ORDER.forEach(function(id){
       if (!cart[id]) return; var it = ITEM[id];
-      t += '- ' + cart[id] + ' x ' + it.name + (it.desc ? ' (' + it.desc + ')' : '') + ': ' + money(cart[id] * it.c) + '\n';
+      t += '• ' + cart[id] + ' x ' + it.name + ' — ' + money(cart[id] * it.c) + '\n';
+      if (it.desc) t += '   _' + it.desc + '_\n';
     });
-    t += '\nTotal: ' + money(total()) + (mode() === 'delivery' ? ' (el delivery se cobra aparte)' : '') + '\n';
+    t += '\n💵 *TOTAL: ' + money(total()) + '*\n';
+    if (del) t += '_(el delivery se cobra aparte)_\n';
+    t += '\n📋 *Datos*\n';
     var name = document.getElementById('fName').value.trim();
     if (name) t += 'Nombre: ' + name + '\n';
-    t += mode() === 'delivery' ? 'Entrega: Delivery a domicilio\nDirección: ' + (fAddr.value.trim() || '(falta)') + '\n' : 'Entrega: Retiro en el local\n';
+    t += 'Entrega: ' + (del ? 'Delivery a domicilio' : 'Retiro en el local') + '\n';
+    if (del) t += 'Dirección: ' + (fAddr.value.trim() || '(falta)') + '\n';
     t += 'Pago: ' + form.elements.pay.value + '\n';
     var notes = document.getElementById('fNotes').value.trim();
-    if (notes) t += 'Notas: ' + notes + '\n';
+    if (notes) t += '\n📝 *Notas*\n' + notes + '\n';
+    t += '\n¡Gracias!';
     send.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(t);
   }
   form.addEventListener('input', function(){
