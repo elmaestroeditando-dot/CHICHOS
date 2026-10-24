@@ -1,2 +1,5 @@
 index.backup-*.html
 .impeccable/
+
+.vercel
+.env*
