@@ -92,7 +92,7 @@
   .nav .wrap{ height:100%; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
   .brand{ display:flex; align-items:center; gap:.7rem; text-decoration:none; }
   .brand img{ width:44px; height:44px; }
-  .brand span{ font-family:var(--f-display); font-size:1.15rem; letter-spacing:.01em; }
+  .brand span{ font-family:var(--f-display); font-size:1.15rem; letter-spacing:.01em; text-transform:uppercase; }
   .nav-links{ display:none; align-items:center; gap:.4rem; }
   .nav-links a{
     text-decoration:none; font-weight:600; padding:.55rem .9rem; border-radius:999px;
@@ -149,11 +149,12 @@
   .hero-copy{ position:relative; z-index:2; }
 
   .hero h1{
-    display:flex; flex-direction:column; gap:.12em; font-size:clamp(3.2rem, 14.5vw, 5.4rem); line-height:1;
+    display:flex; flex-direction:column; gap:.12em; font-size:clamp(3rem, 12.5vw, 5.4rem); line-height:1;
     color:var(--cream); text-shadow:.04em .04em 0 var(--chili);
     animation:fadeUp .8s .05s cubic-bezier(.2,.9,.25,1) both;
   }
-  .hero h1 small{ font:400 .36em/1.1 var(--f-display); color:var(--mustard); text-shadow:none; letter-spacing:.05em; }
+  .hero h1{ text-transform:uppercase; }
+  .hero h1 small{ font:400 .36em/1.1 var(--f-display); color:var(--mustard); text-shadow:none; letter-spacing:.05em; text-transform:none; }
   .hero-tag{
     margin-top:1.4rem; font:800 clamp(1.4rem, 5.8vw, 2rem)/1.2 var(--f-body); color:var(--cream);
     animation:fadeUp .7s .22s cubic-bezier(.2,.9,.25,1) both;
