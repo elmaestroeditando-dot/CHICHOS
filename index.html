@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chichos Bar &amp; Grill | Costillas BBQ, alitas y hamburguesas en Pasaje</title>
+<meta name="description" content="Costillas BBQ, alitas, hamburguesas y bandejitas en Pasaje, El Oro. Pide por WhatsApp o ven al local, de 17:30 a 23:30.">
+<meta name="theme-color" content="#120d0a">
+<link rel="icon" href="fotos/logo-chichos.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root{
+    --coal:#120d0a;
+    --ember:#1b130e;
+    --char:#2a1d15;
+    --cream:#fff1d6;
+    --paper:#f7e0b5;
+    --flame:#ff6a1a;
+    --chili:#e63329;
+    --mustard:#ffc01f;
+    --sky:#8fcdf3;
+    --ink:#fff1d6;
+    --ink-dim:#cdb99b;
+
+    --f-display:"Dela Gothic One", "Arial Black", system-ui, sans-serif;
+    --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --nav-h:68px;
+    --gutter:clamp(1.1rem, 4vw, 2.5rem);
+    --max:1180px;
+    --r-sm:10px;
+    --r-md:18px;
+    --r-lg:28px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 8px); -webkit-text-size-adjust:100%; }
+  body{ overflow-x:clip; }
+  body{
+    margin:0;
+    background:var(--coal);
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:1.0625rem;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ display:block; max-width:100%; }
+  a{ color:inherit; }
+  h1,h2,h3{ font-family:var(--f-display); font-weight:400; margin:0; line-height:1.02; letter-spacing:.005em; }
+  p{ margin:0; }
+  ul{ margin:0; padding:0; list-style:none; }
+
+  :focus-visible{ outline:3px solid var(--sky); outline-offset:3px; border-radius:6px; }
+
+  .wrap{ width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gutter); }
+  .skip{
+    position:absolute; left:-999px; top:0; background:var(--mustard); color:var(--coal);
+    padding:.6rem 1rem; font-weight:700; z-index:100; border-radius:0 0 8px 0;
+  }
+  .skip:focus{ left:0; }
+
+  /* ---------- Botones ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:.65rem;
+    min-height:52px; padding:.85rem 1.6rem;
+    border-radius:999px; border:2px solid transparent;
+    font:700 1.05rem/1 var(--f-body); text-decoration:none; cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+  }
+  .btn svg{ width:22px; height:22px; flex:none; }
+  .btn-wa{
+    background:var(--mustard); color:var(--coal);
+    box-shadow:0 5px 0 var(--chili);
+  }
+  .btn-wa:hover{ transform:translateY(-2px); box-shadow:0 7px 0 var(--chili); }
+  .btn-wa:active{ transform:translateY(3px); box-shadow:0 2px 0 var(--chili); }
+  .btn-ghost{ border-color:rgba(255,241,214,.4); color:var(--cream); background:transparent; }
+  .btn-ghost:hover{ border-color:var(--cream); background:rgba(255,241,214,.08); }
+
+  /* ---------- Navegación fija ---------- */
+  .nav{
+    position:fixed; inset:0 0 auto 0; z-index:50; height:var(--nav-h);
+    background:rgba(18,13,10,.82);
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,241,214,.1);
+  }
+  .nav .wrap{ height:100%; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .brand{ display:flex; align-items:center; gap:.7rem; text-decoration:none; }
+  .brand img{ width:44px; height:44px; }
+  .brand span{ font-family:var(--f-display); font-size:1.15rem; letter-spacing:.01em; }
+  .nav-links{ display:none; align-items:center; gap:.4rem; }
+  .nav-links a{
+    text-decoration:none; font-weight:600; padding:.55rem .9rem; border-radius:999px;
+    color:var(--ink-dim); transition:color .15s, background-color .15s;
+  }
+  .nav-links a:hover, .nav-links a.is-active{ color:var(--cream); background:rgba(255,241,214,.09); }
+  .nav-cta{ display:none; min-height:44px; padding:.6rem 1.15rem; font-size:.98rem; box-shadow:0 4px 0 var(--chili); }
+
+  .burger{
+    width:46px; height:46px; display:grid; place-items:center; background:none; border:0; cursor:pointer;
+    color:var(--cream); border-radius:12px;
+  }
+  .burger span, .burger span::before, .burger span::after{
+    display:block; width:24px; height:3px; background:currentColor; border-radius:3px; position:relative;
+    transition:transform .25s ease, background-color .25s ease;
+  }
+  .burger span::before, .burger span::after{ content:""; position:absolute; left:0; }
+  .burger span::before{ top:-8px; }
+  .burger span::after{ top:8px; }
+  .burger[aria-expanded="true"] span{ background:transparent; }
+  .burger[aria-expanded="true"] span::before{ transform:translateY(8px) rotate(45deg); }
+  .burger[aria-expanded="true"] span::after{ transform:translateY(-8px) rotate(-45deg); }
+
+  .drawer{
+    position:fixed; inset:var(--nav-h) 0 auto 0; z-index:49;
+    background:var(--ember); border-bottom:1px solid rgba(255,241,214,.12);
+    padding:1rem var(--gutter) 1.5rem;
+    transform:translateY(-12px); opacity:0; visibility:hidden;
+    transition:transform .25s ease, opacity .25s ease, visibility 0s .25s;
+  }
+  .drawer.open{ transform:none; opacity:1; visibility:visible; transition:transform .25s ease, opacity .25s ease; }
+  .drawer a:not(.btn){
+    display:block; padding:.95rem .25rem; font:400 1.5rem/1.1 var(--f-display);
+    text-decoration:none; border-bottom:1px solid rgba(255,241,214,.1);
+  }
+  .drawer .btn{ width:100%; margin-top:1.1rem; }
+
+  @media (min-width:900px){
+    .nav-links{ display:flex; }
+    .nav-cta{ display:inline-flex; }
+    .burger, .drawer{ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    padding:calc(var(--nav-h) + 2.5rem) 0 3.5rem;
+    background:
+      radial-gradient(70% 55% at 85% 35%, rgba(255,106,26,.28), transparent 70%),
+      radial-gradient(50% 40% at 5% 100%, rgba(230,51,41,.22), transparent 70%),
+      var(--coal);
+  }
+  .hero-grid{ display:grid; gap:2.5rem; align-items:center; }
+  .hero-copy{ position:relative; z-index:2; }
+
+  .hero h1{
+    font-size:clamp(2.9rem, 11.5vw, 6.4rem);
+    color:var(--cream);
+    text-shadow:.045em .045em 0 var(--chili);
+  }
+  .hero h1 .line{ display:block; overflow:hidden; padding-bottom:.08em; }
+  .hero h1 .line > span{ display:block; animation:slam .8s cubic-bezier(.2,.9,.25,1) both; }
+  .hero h1 .line:nth-child(2) > span{ animation-delay:.12s; }
+  @keyframes slam{ from{ transform:translateY(105%) rotate(2deg); } to{ transform:none; } }
+
+  .hero-sub{ margin-top:1.6rem; max-width:34rem; font-size:clamp(1.1rem, 2.6vw, 1.3rem); color:var(--ink-dim); }
+  .hero-sub b{ color:var(--cream); font-weight:700; }
+  .hero-actions{ margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; align-items:center; }
+  .hero-actions .btn-wa{ animation:fadeUp .6s .55s both; }
+  .hero-actions .btn-ghost{ animation:fadeUp .6s .65s both; }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+
+  .status{
+    margin-top:1.6rem; display:inline-flex; align-items:center; gap:.6rem;
+    font-weight:600; font-size:.98rem; color:var(--ink-dim);
+  }
+  .status i{ width:10px; height:10px; border-radius:50%; background:#777; flex:none; }
+  .status[data-open="true"] i{ background:#4ade80; }
+  .status[data-open="true"]{ color:var(--cream); }
+
+  .hero-photo{ position:relative; justify-self:center; width:min(100%, 440px); }
+  .hero-photo .frame{
+    aspect-ratio:4/5; border-radius:var(--r-lg); overflow:hidden;
+    border:4px solid var(--cream);
+    box-shadow:clamp(7px, 2vw, 14px) clamp(7px, 2vw, 14px) 0 var(--chili);
+    transform:rotate(2deg);
+    animation:settle .9s .3s cubic-bezier(.2,.9,.25,1) both;
+  }
+  .hero-photo .frame img{ width:100%; height:100%; object-fit:cover; object-position:center 62%; }
+  @keyframes settle{ from{ opacity:0; transform:translateY(40px) rotate(7deg); } to{ opacity:1; transform:rotate(2deg); } }
+  .seal{
+    position:absolute; left:-14px; bottom:-26px; width:clamp(104px, 28vw, 150px); height:auto;
+    filter:drop-shadow(0 8px 14px rgba(0,0,0,.55)); transform:rotate(-9deg);
+    animation:fadeUp .7s .9s both;
+  }
+
+  @media (min-width:900px){
+    .hero{ padding:calc(var(--nav-h) + 4rem) 0 5.5rem; min-height:min(100svh, 860px); display:flex; align-items:center; }
+    .hero .wrap{ width:100%; }
+    .hero-grid{ grid-template-columns:1.15fr .85fr; gap:3.5rem; }
+    .hero h1{ font-size:clamp(3.4rem, 6vw, 5.4rem); }
+  }
+
+  /* ---------- Secciones ---------- */
+  .section{ padding:clamp(4rem, 9vw, 7rem) 0; }
+  .section-head{ max-width:40rem; margin-bottom:clamp(2rem, 5vw, 3.2rem); }
+  .section-head h2{ font-size:clamp(2.1rem, 6.5vw, 3.8rem); }
+  .section-head p{ margin-top:1rem; color:var(--ink-dim); max-width:34rem; }
+
+  /* ---------- Franja de datos rápidos ---------- */
+  .strip{ background:var(--mustard); color:var(--coal); }
+  .strip ul{ display:grid; grid-template-columns:repeat(2, 1fr); gap:1.1rem 1rem; padding-block:1.4rem; }
+  .strip li{ display:flex; align-items:center; gap:.7rem; font-weight:700; line-height:1.25; font-size:.98rem; }
+  .strip svg{ width:30px; height:30px; flex:none; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  @media (min-width:900px){
+    .strip ul{ grid-template-columns:repeat(4, 1fr); padding-block:1.2rem; }
+    .strip li{ font-size:1.05rem; }
+  }
+
+  /* ---------- Menú interactivo ---------- */
+  #menu{ background:var(--ember); }
+  .menu-tabs{
+    display:flex; gap:.6rem; overflow-x:auto; padding:.3rem .3rem 1.1rem; margin:0 -.3rem;
+    scrollbar-width:none;
+  }
+  .menu-tabs::-webkit-scrollbar{ display:none; }
+  .tab{
+    flex:none; min-height:50px; padding:.7rem 1.3rem; border-radius:999px;
+    border:2px solid rgba(255,241,214,.28); background:transparent; color:var(--cream);
+    font:700 1rem/1 var(--f-body); cursor:pointer;
+    transition:background-color .2s, color .2s, border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .tab:hover{ border-color:var(--cream); }
+  .tab[aria-selected="true"]{
+    background:var(--mustard); border-color:var(--mustard); color:var(--coal);
+    box-shadow:0 4px 0 var(--chili); transform:translateY(-2px);
+  }
+  .tab .n{
+    display:inline-grid; place-items:center; min-width:22px; height:22px; padding:0 6px; margin-left:.5rem;
+    border-radius:999px; background:var(--chili); color:#fff; font-size:.8rem; vertical-align:middle;
+  }
+
+  .menu-panel{
+    display:grid; gap:1rem; background:var(--char); border-radius:var(--r-lg);
+    padding:.9rem; border:1px solid rgba(255,241,214,.1);
+  }
+  .menu-panel[hidden]{ display:none; }
+  .menu-panel:not([hidden]){ animation:panelIn .55s cubic-bezier(.2,.9,.25,1) both; }
+  @keyframes panelIn{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:none; } }
+  .menu-photo{ position:relative; border-radius:var(--r-md); overflow:hidden; aspect-ratio:16/10; background:var(--ember); }
+  .menu-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:var(--pos, center); }
+  .from{
+    position:absolute; left:12px; bottom:12px; background:var(--mustard); color:var(--coal);
+    padding:.6rem .95rem; border-radius:14px; font-weight:700; font-size:.88rem; line-height:1.1;
+    transform:rotate(-3deg);
+  }
+  .from b{ display:block; font:400 1.7rem/1.05 var(--f-display); }
+  .menu-list{ padding:.4rem .5rem 1rem; align-self:start; }
+  .menu-list h3{ font-size:clamp(1.7rem, 5vw, 2.3rem); margin-bottom:.4rem; }
+  .menu-list .sub{ font:700 .95rem/1.2 var(--f-body); color:var(--mustard); margin:1rem 0 .1rem; }
+
+  .item{
+    display:flex; flex-wrap:wrap; align-items:center; gap:.45rem .8rem; padding:.85rem .5rem;
+    margin-inline:-.5rem; border-bottom:1px solid rgba(255,241,214,.08); border-radius:12px;
+    transition:background-color .25s;
+  }
+  .item:last-child{ border-bottom:0; }
+  .item.has{ background:rgba(255,192,31,.09); }
+  .menu-panel:not([hidden]) .item{ animation:itemIn .5s cubic-bezier(.2,.9,.25,1) both; animation-delay:calc(var(--i, 0) * 60ms + 120ms); }
+  @keyframes itemIn{ from{ opacity:0; transform:translateX(22px); } to{ opacity:1; transform:none; } }
+  .item-name{ flex:1 1 100%; font-weight:600; font-size:1.08rem; line-height:1.3; }
+  .item-name small{ display:block; font-weight:500; font-size:.9rem; color:var(--ink-dim); }
+  .price{ font:400 1.45rem/1 var(--f-display); color:var(--mustard); white-space:nowrap; }
+  .ctl{ margin-left:auto; min-height:46px; display:flex; align-items:center; }
+
+  .add{
+    min-height:46px; padding:.55rem 1.15rem; border-radius:999px; border:0; cursor:pointer;
+    background:var(--mustard); color:var(--coal); font:700 .98rem/1 var(--f-body);
+    display:inline-flex; align-items:center; gap:.45rem; box-shadow:0 3px 0 var(--chili);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .add svg{ width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; }
+  .add:hover{ transform:translateY(-2px); box-shadow:0 5px 0 var(--chili); }
+  .add:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--chili); }
+  .step{
+    display:inline-flex; align-items:center; border-radius:999px; border:2px solid var(--mustard);
+    background:var(--coal); animation:stepIn .3s cubic-bezier(.3,1.5,.5,1) both;
+  }
+  @keyframes stepIn{ from{ transform:scale(.7); opacity:.4; } to{ transform:none; opacity:1; } }
+  .step button{
+    width:44px; height:44px; border:0; border-radius:50%; cursor:pointer; background:transparent; color:var(--mustard);
+    display:grid; place-items:center; transition:background-color .15s;
+  }
+  .step button:hover{ background:rgba(255,192,31,.18); }
+  .step svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:3.2; stroke-linecap:round; }
+  .step .q{ min-width:2ch; text-align:center; font:700 1.1rem/1 var(--f-body); }
+  .step .q.bump{ animation:bump .3s ease; }
+  @keyframes bump{ 50%{ transform:scale(1.35); } }
+
+
+  @media (min-width:640px){
+    .item-name{ flex:1 1 0; }
+    .item{ flex-wrap:nowrap; }
+    .ctl{ margin-left:0; min-width:132px; justify-content:flex-end; }
+  }
+  @media (min-width:860px){
+    .menu-panel{ grid-template-columns:.8fr 1.2fr; padding:1.1rem; gap:1.5rem; }
+    .menu-photo{ aspect-ratio:auto; min-height:460px; position:sticky; top:calc(var(--nav-h) + 16px); align-self:start; height:min(560px, calc(100dvh - var(--nav-h) - 40px)); }
+    .menu-list{ padding:1rem 1rem 1rem .2rem; }
+  }
+
+  /* ---------- Barra y hoja del pedido ---------- */
+  .cartbar{
+    position:fixed; left:12px; right:92px; bottom:16px; z-index:46; overflow:hidden;
+    border-radius:30px; background:var(--cream); color:var(--coal); box-shadow:0 8px 20px rgba(0,0,0,.5);
+    transform:translateY(160%); opacity:0; pointer-events:none;
+    transition:transform .5s cubic-bezier(.3,1.3,.5,1), opacity .3s;
+  }
+  .cartbar.on{ transform:none; opacity:1; pointer-events:auto; }
+  .cartbar.pop{ animation:cartPop .4s ease; }
+  @keyframes cartPop{ 40%{ transform:scale(1.04); } }
+  .cb-peek{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s cubic-bezier(.2,.9,.25,1); }
+  .cartbar.expanded .cb-peek{ grid-template-rows:1fr; }
+  .cb-peek-in{ overflow:hidden; min-height:0; visibility:hidden; transition:visibility 0s .4s; }
+  .cartbar.expanded .cb-peek-in{ visibility:visible; transition:none; }
+  .cb-list{ max-height:min(38dvh, 300px); overflow-y:auto; padding:.5rem 1rem 0; overscroll-behavior:contain; }
+  .cb-list .oline{ border-bottom:1px dashed rgba(18,13,10,.22); padding:.5rem 0; }
+  .cb-list .oline:last-child{ border-bottom:0; }
+  .cb-list .info2 small{ color:#5a4a3a; }
+  .cb-list .oline .sub{ color:var(--coal); font-size:1rem; }
+  .cb-list .step{ background:var(--cream); border-color:var(--coal); }
+  .cb-list .step button{ color:var(--coal); }
+  .cb-list .step button:hover{ background:rgba(18,13,10,.1); }
+  .cb-row{ display:flex; align-items:center; gap:.4rem; min-height:64px; padding:.5rem .55rem .5rem .7rem; }
+  .cb-toggle{
+    flex:1; min-width:0; min-height:48px; display:flex; align-items:center; gap:.65rem; background:none; border:0;
+    color:inherit; font:inherit; text-align:left; cursor:pointer;
+  }
+  .cb-toggle .count{
+    min-width:36px; height:36px; border-radius:50%; background:var(--chili); color:#fff; flex:none;
+    display:grid; place-items:center; font:700 1rem/1 var(--f-body);
+  }
+  .cb-toggle .lbl{ flex:1; font-weight:700; line-height:1.15; min-width:0; }
+  .cb-toggle .lbl small{ display:block; font:400 1.15rem/1.1 var(--f-display); }
+  .cb-toggle .chev{ stroke:var(--coal); width:24px; height:24px; }
+  .cartbar.expanded .cb-toggle .chev{ transform:rotate(180deg); }
+  .cb-go{
+    border:0; cursor:pointer; background:var(--coal); color:var(--cream); padding:.8rem 1rem; border-radius:999px;
+    font:700 .95rem/1 var(--f-body); white-space:nowrap; min-height:44px;
+  }
+  .cb-x{
+    width:36px; height:36px; flex:none; border:0; border-radius:50%; cursor:pointer; background:rgba(18,13,10,.1);
+    color:var(--coal); display:grid; place-items:center;
+  }
+  .cb-x:hover{ background:rgba(18,13,10,.2); }
+  .cb-x svg{ width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:3.2; stroke-linecap:round; }
+  .cb-mini{
+    position:fixed; left:12px; bottom:16px; z-index:46; width:60px; height:60px; border-radius:50%; border:0; cursor:pointer;
+    background:var(--cream); color:var(--coal); display:none; place-items:center; box-shadow:0 8px 18px rgba(0,0,0,.5);
+  }
+  .cb-mini svg{ width:30px; height:30px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .cb-mini .count{
+    position:absolute; top:-4px; right:-4px; min-width:24px; height:24px; padding:0 6px; border-radius:999px;
+    background:var(--chili); color:#fff; font:700 .85rem/24px var(--f-body); text-align:center;
+  }
+  body.has-cart.cb-min .cb-mini{ display:grid; animation:stepIn .35s cubic-bezier(.3,1.5,.5,1) both; }
+  body.cb-min .cartbar{ display:none; }
+  body.cart-open .cb-mini{ display:none !important; }
+  body.has-cart .fab-bubble{ display:none; }
+  body.cart-open .fab, body.cart-open .cartbar{ display:none; }
+  @media (min-width:900px){
+    .cartbar{ left:50%; right:auto; width:min(540px, calc(100% - 220px)); translate:-50% 0; }
+    .cb-mini{ left:24px; bottom:24px; }
+  }
+
+  .sheet-bg{
+    position:fixed; inset:0; z-index:60; background:rgba(0,0,0,.7); opacity:0; visibility:hidden;
+    transition:opacity .35s, visibility 0s .35s;
+  }
+  .sheet-bg.open{ opacity:1; visibility:visible; transition:opacity .35s; }
+  .sheet{
+    position:fixed; z-index:61; left:0; right:0; bottom:0; max-height:94dvh; display:flex; flex-direction:column;
+    background:var(--ember); color:var(--cream); border-radius:var(--r-lg) var(--r-lg) 0 0;
+    border-top:3px solid var(--mustard);
+    transform:translateY(100%); visibility:hidden;
+    transition:transform .5s cubic-bezier(.2,.9,.25,1), visibility 0s .5s;
+  }
+  .sheet.open{ transform:none; visibility:visible; transition:transform .5s cubic-bezier(.2,.9,.25,1); }
+  @media (min-width:760px){
+    .sheet{ left:auto; top:0; width:min(460px, 100%); max-height:none; border-radius:var(--r-lg) 0 0 var(--r-lg); border-top:0; border-left:3px solid var(--mustard); transform:translateX(100%); }
+  }
+  .sheet-head{ display:flex; align-items:center; justify-content:space-between; padding:1.1rem 1.3rem; border-bottom:1px solid rgba(255,241,214,.12); }
+  .sheet-head h2{ font-size:1.6rem; }
+  .x{
+    width:46px; height:46px; border-radius:50%; border:2px solid rgba(255,241,214,.3); background:transparent; color:var(--cream);
+    display:grid; place-items:center; cursor:pointer;
+  }
+  .x:hover{ border-color:var(--cream); }
+  .x svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; }
+  .sheet-body{ overflow-y:auto; padding:.6rem 1.3rem 1.2rem; flex:1; overscroll-behavior:contain; }
+  .empty{ text-align:center; padding:2.5rem 0 1rem; color:var(--ink-dim); }
+  .empty .btn{ margin-top:1.2rem; }
+  .oline{ display:flex; align-items:center; gap:.8rem; padding:.85rem 0; border-bottom:1px dashed rgba(255,241,214,.18); }
+  .oline .info2{ flex:1; min-width:0; font-weight:600; line-height:1.3; }
+  .oline .info2 small{ display:block; font-weight:500; color:var(--ink-dim); font-size:.88rem; }
+  .oline .sub{ font:400 1.1rem/1 var(--f-display); color:var(--mustard); white-space:nowrap; min-width:3.6rem; text-align:right; }
+  .oline .step button{ width:38px; height:38px; }
+  .oline .step{ flex:none; }
+  .form{ margin-top:1.3rem; display:grid; gap:1rem; }
+  .field{ display:grid; gap:.4rem; font-weight:600; font-size:.95rem; border:0; padding:0; margin:0; min-width:0; }
+  .field[hidden]{ display:none; }
+  .field legend{ padding:0; margin-bottom:.4rem; font-weight:600; }
+  .field input[type=text], .field textarea{
+    width:100%; min-height:48px; padding:.75rem .9rem; border-radius:12px; border:2px solid rgba(255,241,214,.22);
+    background:var(--char); color:var(--cream); font:500 1rem/1.4 var(--f-body);
+  }
+  .field textarea{ resize:vertical; }
+  .field input::placeholder, .field textarea::placeholder{ color:#a99880; }
+  .field input[type=text]:focus, .field textarea:focus{ outline:none; border-color:var(--mustard); }
+  .chips{ display:flex; flex-wrap:wrap; gap:.5rem; }
+  .chip{ position:relative; }
+  .chip input{ position:absolute; opacity:0; inset:0; width:100%; height:100%; margin:0; cursor:pointer; }
+  .chip span{
+    display:inline-flex; align-items:center; min-height:44px; padding:.55rem 1rem; border-radius:999px;
+    border:2px solid rgba(255,241,214,.28); font-weight:600; transition:background-color .2s, color .2s, border-color .2s;
+  }
+  .chip input:checked + span{ background:var(--mustard); color:var(--coal); border-color:var(--mustard); }
+  .chip input:focus-visible + span{ outline:3px solid var(--sky); outline-offset:3px; }
+  .err{ color:#ff8a80; font-weight:600; font-size:.92rem; min-height:1.2em; }
+  .sheet-foot{ padding:1rem 1.3rem calc(1.2rem + env(safe-area-inset-bottom)); border-top:1px solid rgba(255,241,214,.12); background:var(--char); }
+  .sum{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:.3rem; }
+  .sum b{ font:400 1.9rem/1 var(--f-display); color:var(--mustard); }
+  .fine{ font-size:.88rem; color:var(--ink-dim); margin-bottom:.9rem; }
+  .sheet-foot .btn{ width:100%; }
+  .linkbtn{ display:block; margin:.8rem auto 0; background:none; border:0; color:var(--ink-dim); font:600 .95rem var(--f-body); text-decoration:underline; text-underline-offset:3px; cursor:pointer; padding:.5rem; }
+
+  .tab .n[hidden]{ display:none; }
+
+
+  /* ---------- Acordeón del menú (móvil) y bloque plegable ---------- */
+  #panels{ display:grid; gap:.7rem; }
+  .menu-panel{ scroll-margin-top:calc(var(--nav-h) + 10px); }
+  .acc-head{ display:none; }
+  .acc-body, .acc-inner{ display:contents; }
+  .more{ margin-top:1rem; background:var(--char); border:1px solid rgba(255,241,214,.1); border-radius:var(--r-lg); }
+  .more summary{
+    list-style:none; cursor:pointer; min-height:64px; padding:.9rem 1.1rem; display:flex; align-items:center;
+    justify-content:space-between; gap:1rem; font:400 1.15rem/1.2 var(--f-display); border-radius:var(--r-lg);
+  }
+  .more summary::-webkit-details-marker{ display:none; }
+  .more summary small{ display:block; font:500 .88rem var(--f-body); color:var(--ink-dim); margin-top:.2rem; }
+  .chev{ width:28px; height:28px; flex:none; fill:none; stroke:var(--mustard); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; transition:transform .35s; }
+  .more[open] .chev{ transform:rotate(180deg); }
+  .more .xgrid{ padding:0 1.1rem 1.2rem; display:grid; gap:1rem; animation:panelIn .4s ease both; }
+  .more h3{ font-size:1.05rem; color:var(--mustard); margin-bottom:.25rem; }
+  .more p{ color:var(--ink-dim); font-size:.97rem; line-height:1.5; }
+  @media (min-width:760px){ .more .xgrid{ grid-template-columns:repeat(3, 1fr); } }
+
+  @media (max-width:859px){
+    .menu-tabs{ display:none; }
+    .menu-panel{ display:block; padding:0; overflow:hidden; animation:none !important; transition:border-color .3s; }
+    .menu-panel.open{ border-color:rgba(255,192,31,.6); }
+    .acc-head{
+      display:flex; align-items:center; gap:.8rem; width:100%; min-height:76px; padding:.65rem .9rem .65rem .65rem;
+      background:none; border:0; color:var(--cream); font:inherit; text-align:left; cursor:pointer;
+    }
+    .acc-head img{ width:58px; height:58px; border-radius:14px; object-fit:cover; object-position:var(--pos, center); flex:none; }
+    .acc-head .t{ flex:1; min-width:0; font:400 1.2rem/1.15 var(--f-display); }
+    .acc-head .t small{ display:block; font:600 .88rem var(--f-body); color:var(--mustard); margin-top:.25rem; }
+    .acc-head .bdg{ min-width:26px; height:26px; padding:0 8px; border-radius:999px; background:var(--chili); color:#fff; font:700 .85rem/26px var(--f-body); text-align:center; }
+    .acc-head .bdg[hidden]{ display:none; }
+    .menu-panel.open .chev{ transform:rotate(180deg); }
+    .acc-body{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .45s cubic-bezier(.2,.9,.25,1); }
+    .menu-panel.open .acc-body{ grid-template-rows:1fr; }
+    .acc-inner{ display:block; overflow:hidden; min-height:0; visibility:hidden; transition:visibility 0s .45s; }
+    .menu-panel.open .acc-inner{ visibility:visible; transition:none; }
+    .menu-photo{ display:none; }
+    .menu-list{ padding:0 .8rem .5rem; }
+    .menu-list h3{ display:none; }
+    .menu-list .sub{ margin:.6rem 0 0; }
+    .item{ flex-wrap:nowrap; padding:.4rem .5rem; gap:.5rem; }
+    .item-name{ flex:1 1 0; font-size:1rem; }
+    .item-name small{ font-size:.82rem; }
+    .price{ font-size:1.15rem; }
+    .ctl{ margin-left:0; min-width:0; min-height:42px; }
+    .add{ padding:.45rem .8rem; font-size:.9rem; min-height:42px; }
+    .step button{ width:38px; height:38px; }
+    .step .q{ min-width:1.6ch; }
+  }
+
+  /* ---------- Galería: carrusel ---------- */
+  .track{
+    position:relative; display:flex; gap:1rem; overflow-x:auto;
+    scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none;
+    margin-inline:calc(var(--gutter) * -1); padding:.4rem var(--gutter) 1rem; scroll-padding-inline:var(--gutter);
+    overscroll-behavior-x:contain;
+  }
+  .track::-webkit-scrollbar{ display:none; }
+  .slide{
+    position:relative; margin:0; flex:0 0 min(78%, 360px); scroll-snap-align:start;
+    aspect-ratio:4/5; border-radius:var(--r-lg); overflow:hidden; background:var(--char);
+  }
+  .slide img{
+    width:100%; height:100%; object-fit:cover; object-position:var(--pos, center);
+    transition:transform .7s cubic-bezier(.2,.8,.2,1);
+  }
+  .slide:hover img{ transform:scale(1.05); }
+  .slide figcaption{
+    position:absolute; inset:auto 0 0 0; padding:3rem 1.1rem 1rem;
+    background:linear-gradient(to top, rgba(18,13,10,.9), transparent);
+    font-weight:700; font-size:1.05rem; line-height:1.25;
+  }
+  .car-ctl{ display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:.6rem; }
+  .dots-nav{ display:flex; gap:.5rem; flex-wrap:wrap; }
+  .dot{
+    width:12px; height:12px; padding:0; border-radius:999px; border:0; cursor:pointer;
+    background:rgba(255,241,214,.3); transition:width .3s, background-color .3s;
+  }
+  .dot[aria-current="true"]{ width:34px; background:var(--mustard); }
+  .arrows{ display:flex; gap:.7rem; }
+  .arrow{
+    width:56px; height:56px; border-radius:50%; border:0; cursor:pointer; display:grid; place-items:center;
+    background:var(--mustard); color:var(--coal); box-shadow:0 4px 0 var(--chili);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .arrow svg{ width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+  .arrow:hover{ transform:translateY(-2px); box-shadow:0 6px 0 var(--chili); }
+  .arrow:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--chili); }
+  @media (min-width:700px){ .slide{ flex-basis:calc(46% - .5rem); } }
+  @media (min-width:1000px){ .slide{ flex-basis:calc(31% - .5rem); } .dot{ width:14px; height:14px; } .dot[aria-current="true"]{ width:40px; } }
+
+  /* ---------- Reseñas ---------- */
+  #resenas{ background:var(--ember); }
+  .reviews{ display:grid; gap:1.2rem; }
+  .review{
+    position:relative; background:var(--char); border-radius:var(--r-lg); padding:2.2rem 1.6rem 1.6rem;
+    border:1px solid rgba(255,241,214,.1); display:flex; flex-direction:column; gap:1.1rem; overflow:hidden;
+  }
+  .review::before{
+    content:"\201C"; position:absolute; right:1.1rem; top:-.15em; font:400 7rem/1 var(--f-display);
+    color:var(--flame); opacity:.35; pointer-events:none;
+  }
+  .review.feat{ background:var(--mustard); color:var(--coal); border-color:transparent; }
+  .review.feat::before{ color:var(--chili); opacity:.5; }
+  .stars{ display:flex; gap:3px; color:var(--mustard); }
+  .feat .stars{ color:var(--coal); }
+  .stars svg{ width:22px; height:22px; fill:currentColor; }
+  .tag{
+    align-self:flex-start; font-weight:700; font-size:.85rem; padding:.35rem .75rem; border-radius:999px;
+    background:rgba(255,241,214,.12); color:var(--cream);
+  }
+  .feat .tag{ background:rgba(18,13,10,.12); color:var(--coal); }
+  .review blockquote{ margin:0; font-size:1.1rem; line-height:1.6; }
+  .feat blockquote{ font-weight:600; }
+  .who{ display:flex; align-items:center; gap:.8rem; margin-top:auto; padding-top:1rem; border-top:1px dashed rgba(255,241,214,.2); }
+  .feat .who{ border-color:rgba(18,13,10,.3); }
+  .who .av{
+    width:46px; height:46px; border-radius:50%; flex:none; display:grid; place-items:center;
+    background:var(--flame); color:var(--coal); font:400 1.15rem/1 var(--f-display);
+  }
+  .review:nth-child(2) .av{ background:var(--sky); }
+  .feat .av{ background:var(--coal); color:var(--mustard); }
+  .who b{ display:block; line-height:1.2; }
+  .who span{ font-size:.9rem; opacity:.8; }
+  @media (min-width:900px){
+    .reviews{ grid-template-columns:repeat(3, 1fr); gap:1.4rem; }
+    .review{ padding:2.4rem 1.8rem 1.8rem; }
+  }
+
+  /* ---------- Ubicación ---------- */
+  .loc{ display:grid; grid-template-columns:minmax(0, 1fr); gap:1.4rem; }
+  .loc-card{
+    background:var(--char); border:1px solid rgba(255,241,214,.1); border-radius:var(--r-lg);
+    padding:1.8rem 1.5rem; display:flex; flex-direction:column; gap:1.2rem; justify-content:center;
+  }
+  .loc-card h3{ font-size:clamp(1.5rem, 4.5vw, 2rem); }
+  .loc-row{ display:flex; gap:.9rem; align-items:flex-start; color:var(--ink-dim); line-height:1.5; }
+  .loc-row svg{ width:26px; height:26px; flex:none; margin-top:.1rem; fill:none; stroke:var(--mustard); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .loc-row b{ color:var(--cream); font-weight:700; display:block; }
+  .loc-actions{ display:flex; flex-wrap:wrap; gap:.8rem; margin-top:.4rem; }
+  .map{
+    position:relative; border-radius:var(--r-lg); overflow:hidden; width:100%; min-width:0; height:340px;
+    border:4px solid var(--cream); background:var(--char);
+  }
+  .map iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .map-lock{
+    position:absolute; inset:0; z-index:2; display:flex; align-items:flex-start; justify-content:flex-start;
+    padding:.8rem; background:transparent; border:0; cursor:pointer; font:inherit;
+  }
+  .map-lock span{
+    background:rgba(18,13,10,.88); color:var(--cream); font-weight:700; font-size:.9rem;
+    padding:.55rem .9rem; border-radius:999px;
+  }
+  .map.active .map-lock{ display:none; }
+  .map-open{
+    position:absolute; top:.8rem; right:.8rem; z-index:3; background:var(--mustard); color:var(--coal);
+    font-weight:700; font-size:.9rem; padding:.55rem .9rem; border-radius:999px; text-decoration:none;
+  }
+  @media (min-width:900px){
+    .loc{ grid-template-columns:minmax(0, .8fr) minmax(0, 1.2fr); gap:2rem; align-items:stretch; }
+    .loc-card{ padding:2.2rem 2rem; }
+    .map{ height:auto; min-height:420px; }
+  }
+
+  /* ---------- Footer ---------- */
+  .footer{
+    background:var(--coal); padding:clamp(3.5rem, 8vw, 5.5rem) 0 6rem;
+    border-top:6px solid var(--chili);
+  }
+  .foot-top{ display:grid; gap:1.6rem; margin-bottom:2.4rem; }
+  .foot-top h2{ font-size:clamp(2.1rem, 6.5vw, 3.6rem); }
+  .foot-top p{ color:var(--ink-dim); margin-top:.9rem; max-width:28rem; }
+  .social-title{ font-size:1.1rem; margin-bottom:.8rem; color:var(--mustard); }
+  .social-cards{ display:grid; gap:.7rem; margin-bottom:3rem; max-width:860px; }
+  .soc{
+    display:flex; align-items:center; gap:.85rem; padding:.75rem 1rem; border-radius:var(--r-sm);
+    text-decoration:none; color:#fff; min-height:64px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .soc:hover{ transform:translateY(-3px); box-shadow:0 5px 0 rgba(0,0,0,.35); }
+  .soc .ico{ width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.22); display:grid; place-items:center; flex:none; }
+  .soc .ico svg{ width:24px; height:24px; }
+  .soc b{ display:block; font:400 1.1rem/1.1 var(--f-display); }
+  .soc span{ display:block; font-weight:600; font-size:.88rem; margin-top:.15rem; }
+  .soc.ig{ background:linear-gradient(45deg, #c8431a 0%, #d42f3d 45%, #b3167f 100%); }
+  .soc.fb{ background:#1664d9; }
+  .soc.wa{ background:#25d366; color:#06240f; }
+  .soc.wa .ico{ background:rgba(6,36,15,.14); }
+  @media (min-width:760px){ .social-cards{ grid-template-columns:repeat(3, 1fr); } }
+
+  .info{ display:grid; gap:2rem 2.5rem; }
+  .info h3{ font-size:1.25rem; margin-bottom:.7rem; color:var(--mustard); }
+  .info p, .info li{ color:var(--ink-dim); }
+  .info b{ color:var(--cream); font-weight:600; }
+  .info a{ text-underline-offset:3px; display:inline-block; padding:.65rem 0; }
+  .hours li{ display:flex; justify-content:space-between; gap:1rem; padding:.3rem 0; border-bottom:1px dotted rgba(255,241,214,.2); }
+  .hours li b{ font-weight:600; }
+  .delivery-note{
+    padding:1.2rem 1.4rem; border-radius:var(--r-md);
+    background:rgba(143,205,243,.1); border:1px solid rgba(143,205,243,.35); color:var(--cream);
+  }
+  .copy{
+    margin-top:3rem; padding-top:1.5rem; border-top:1px solid rgba(255,241,214,.12);
+    display:flex; flex-wrap:wrap; gap:.5rem 1.5rem; justify-content:space-between;
+    font-size:.92rem; color:var(--ink-dim);
+  }
+  @media (min-width:900px){
+    .info{ grid-template-columns:repeat(3, 1fr); }
+    .foot-top{ grid-template-columns:1fr auto; align-items:end; }
+  }
+
+  /* ---------- WhatsApp flotante ---------- */
+  .fab{
+    position:fixed; right:16px; bottom:16px; z-index:45; display:flex; align-items:center; gap:.7rem;
+    flex-direction:row-reverse; text-decoration:none; pointer-events:none;
+  }
+  .fab-btn{
+    position:relative; width:64px; height:64px; border-radius:50%; display:grid; place-items:center; pointer-events:auto;
+    background:#25d366; color:#fff; box-shadow:0 8px 18px rgba(0,0,0,.5);
+    animation:wiggle 5s ease-in-out 3s infinite;
+  }
+  .fab-btn::before{
+    content:""; position:absolute; inset:0; border-radius:50%; border:3px solid #25d366;
+    animation:ring 2.4s ease-out infinite;
+  }
+  .fab-btn svg{ width:34px; height:34px; }
+  .fab-bubble{
+    background:var(--cream); color:var(--coal); font:400 1.15rem/1 var(--f-display);
+    padding:.85rem 1.1rem; border-radius:18px 18px 4px 18px; box-shadow:0 8px 18px rgba(0,0,0,.45);
+    opacity:0; transform:translateX(14px) scale(.85); transform-origin:right center; pointer-events:none;
+    transition:opacity .35s ease, transform .45s cubic-bezier(.3,1.5,.5,1);
+    white-space:nowrap;
+  }
+  .fab.talk .fab-bubble{ opacity:1; transform:none; pointer-events:auto; }
+  @keyframes ring{ 0%{ transform:scale(1); opacity:.9; } 100%{ transform:scale(1.75); opacity:0; } }
+  @keyframes wiggle{
+    0%, 80%, 100%{ transform:none; }
+    83%{ transform:rotate(-16deg) scale(1.1); } 86%{ transform:rotate(14deg) scale(1.1); }
+    89%{ transform:rotate(-10deg); } 92%{ transform:rotate(7deg); } 95%{ transform:rotate(0); }
+  }
+
+  /* ---------- Barra de progreso y revelado al hacer scroll ---------- */
+  .progress{
+    position:fixed; top:var(--nav-h); left:0; width:100%; height:4px; z-index:51;
+    background:linear-gradient(90deg, var(--chili), var(--flame), var(--mustard));
+    transform:scaleX(0); transform-origin:left;
+  }
+  .js [data-anim]{
+    opacity:0;
+    transition:opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1);
+    transition-delay:var(--d, 0s);
+  }
+  .js [data-anim="up"]{ transform:translateY(38px); }
+  .js [data-anim="left"]{ transform:translateX(-46px); }
+  .js [data-anim="right"]{ transform:translateX(46px); }
+  .js [data-anim="pop"]{ transform:scale(.86) translateY(24px); }
+  .js [data-anim="tilt"]{ transform:translateY(46px) rotate(-3deg); }
+  .js [data-anim="fade"]{ transform:none; }
+  .js [data-anim].in{ opacity:1; transform:none; }
+
+  @media (max-width:699px){
+    .track{ padding-inline:11%; scroll-padding-inline:11%; }
+    .slide{ flex-basis:100%; scroll-snap-align:center; }
+  }
+
+  /* ---------- Móvil: composición centrada y simétrica ---------- */
+  @media (max-width:759px){
+    .hero-copy{ text-align:center; }
+    .hero-sub{ margin-inline:auto; }
+    .hero-actions{ flex-direction:column; align-items:stretch; gap:.9rem; max-width:360px; margin-inline:auto; }
+    .hero-actions .btn{ width:100%; }
+    .status{ justify-content:center; }
+    .hero-photo{ width:min(86%, 380px); }
+    .seal{ left:50%; margin-left:calc(clamp(104px, 28vw, 150px) / -2); bottom:-34px; }
+    .hero{ padding-bottom:4.5rem; }
+
+    .strip li{ flex-direction:column; text-align:center; gap:.45rem; }
+
+    .section-head{ text-align:center; margin-inline:auto; }
+    .section-head p{ margin-inline:auto; }
+
+    .car-ctl{ flex-direction:column-reverse; align-items:center; gap:1.1rem; }
+    .dots-nav{ justify-content:center; }
+
+    .loc-card h3{ text-align:center; }
+    .loc-actions{ flex-direction:column; align-items:stretch; }
+    .loc-actions .btn{ width:100%; }
+    .map-lock{ justify-content:center; }
+    .map-open{ right:50%; transform:translateX(50%); top:auto; bottom:.8rem; }
+
+    .foot-top{ text-align:center; justify-items:center; }
+    .foot-top p{ margin-inline:auto; }
+    .foot-top .btn{ width:100%; max-width:360px; }
+    .social-title{ text-align:center; }
+    .info{ text-align:center; }
+    .info .loc-row, .info .hours{ text-align:left; }
+    .info h3{ margin-top:0; }
+    .copy{ justify-content:center; text-align:center; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation:none !important; transition-duration:.01ms !important; }
+    .hero-photo .frame{ transform:rotate(2deg); }
+  }
+</style>
+</head>
+
+<body>
+<a class="skip" href="#menu">Saltar al menú</a>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="Chichos Bar &amp; Grill, ir al inicio">
+      <img src="fotos/logo-chichos.png" alt="" width="44" height="44">
+      <span>Chichos</span>
+    </a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#menu">Menú</a>
+      <a href="#galeria">Galería</a>
+      <a href="#resenas">Reseñas</a>
+      <a href="#ubicacion">Ubicación</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="btn btn-wa nav-cta" href="https://wa.me/593983040897?text=Hola%20Chichos%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3ZM12 21.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 0 1-1.5-5.2C2.1 6.4 6.5 2 12 2c2.6 0 5.1 1 6.9 2.9a9.7 9.7 0 0 1 2.9 6.9c0 5.4-4.4 9.9-9.8 9.9Zm5.4-7.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.100 3.200 5.100 4.500.7.3 1.300.5 1.700.6.700.2 1.400.2 1.900.1.600-.1 1.800-.7 2-1.400.3-.7.300-1.300.2-1.400-.1-.1-.3-.2-.6-.3Z"/></svg>
+      Ordenar por WhatsApp
+    </a>
+    <button class="burger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="drawer"><span></span></button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="#inicio">Inicio</a>
+  <a href="#menu">Menú</a>
+  <a href="#galeria">Galería</a>
+  <a href="#resenas">Reseñas</a>
+  <a href="#ubicacion">Ubicación</a>
+  <a href="#contacto">Contacto</a>
+  <a class="btn btn-wa" href="https://wa.me/593983040897?text=Hola%20Chichos%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Ordenar por WhatsApp</a>
+</div>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>
+        <span class="line"><span>¡No te quedes</span></span>
+        <span class="line"><span>con las ganas!</span></span>
+      </h1>
+      <p class="hero-sub">
+        <b>Costillas BBQ, alitas, hamburguesas y bandejitas</b> con todo el sabor de Chichos. Pídelas por WhatsApp o ven a probarlas en Pasaje.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-wa" href="https://wa.me/593983040897?text=Hola%20Chichos%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3ZM12 21.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 0 1-1.5-5.2C2.1 6.4 6.5 2 12 2c2.6 0 5.1 1 6.9 2.9a9.7 9.7 0 0 1 2.9 6.9c0 5.4-4.4 9.9-9.8 9.9Zm5.4-7.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.100 3.200 5.100 4.500.7.3 1.300.5 1.700.6.700.2 1.400.2 1.900.1.600-.1 1.800-.7 2-1.400.3-.7.300-1.300.2-1.400-.1-.1-.3-.2-.6-.3Z"/></svg>
+          Ordenar por WhatsApp
+        </a>
+        <a class="btn btn-ghost" href="#menu">Ver el menú</a>
+      </div>
+      <p class="status" id="status" data-open="false"><i></i><span id="status-text">Abierto de 17:30 a 23:30</span></p>
+    </div>
+
+    <div class="hero-photo">
+      <div class="frame">
+        <img src="fotos/whitemanna-solo.jpg" alt="Hamburguesa White Manna con tocino, queso y papas, servida en papel con el sello de Chichos" width="1200" height="1496" fetchpriority="high">
+      </div>
+      <img class="seal" src="fotos/logo-chichos.png" alt="Sello de Chichos: gato azul con hamburguesa y cerveza" width="150" height="150">
+    </div>
+  </div>
+</section>
+
+<!-- ================= DATOS RÁPIDOS ================= -->
+<section class="strip" aria-label="Datos rápidos">
+  <ul class="wrap">
+    <li data-anim="up"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Abierto de 17:30 a 23:30</li>
+    <li data-anim="up" style="--d:.08s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>Delivery a domicilio</li>
+    <li data-anim="up" style="--d:.16s"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><path d="M16 14.500h2"/></svg>DeUna, transferencia y efectivo</li>
+    <li data-anim="up" style="--d:.24s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21Z"/><circle cx="12" cy="9.500" r="2.500"/></svg>Pasaje, El Oro</li>
+  </ul>
+</section>
+
+<!-- ================= MENÚ INTERACTIVO ================= -->
+<section class="section" id="menu">
+  <div class="wrap">
+    <div class="section-head" data-anim="up">
+      <h2>Arma tu pedido</h2>
+      <p>Elige lo que se te antoja, ajusta las cantidades y mándalo directo al WhatsApp de Chichos.</p>
+    </div>
+
+    <div data-anim="up" style="--d:.1s">
+      <div class="menu-tabs" role="tablist" id="tabs" aria-label="Categorías del menú"></div>
+      <div id="panels"></div>
+    </div>
+
+    <details class="more" data-anim="up">
+      <summary><span>Salsas, extras y bebidas<small>Se piden en las notas del pedido</small></span>
+        <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <div class="xgrid">
+        <div><h3>Salsas</h3><p>BBQ, queso, honey mustard, maracuyá y búfalo.</p></div>
+        <div><h3>Extras</h3><p>Tocino, salchicha, jamón, queso cheddar, chorizo y huevo.</p></div>
+        <div><h3>Bebidas</h3><p>Jamaica, colas, aguas, cervezas y micheladas.</p></div>
+        <p>Te confirmamos el precio por WhatsApp.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= GALERÍA ================= -->
+<section class="section" id="galeria">
+  <div class="wrap">
+    <div class="section-head" data-anim="up">
+      <h2>Mira cómo salen del fogón</h2>
+      <p>Fotos reales de nuestra cocina. Desliza o usa las flechas.</p>
+    </div>
+
+    <div data-anim="up" style="--d:.1s" role="region" aria-roledescription="carrusel" aria-label="Fotos de platos de Chichos">
+      <div class="track" id="track" tabindex="0">
+        <figure class="slide" style="--pos:center 78%">
+          <img src="fotos/costillas-bbq.jpg" alt="Dos costillas BBQ a la parrilla con papas fritas en bandeja con el sello de Chichos" loading="lazy" width="1200" height="1496">
+          <figcaption>Costilla BBQ con papas</figcaption>
+        </figure>
+        <figure class="slide" style="--pos:center 66%">
+          <img src="fotos/chillidog.jpg" alt="Hot dog con queso cheddar derretido, tocino y canasta de papas" loading="lazy" width="1200" height="1433">
+          <figcaption>Chillidog con full queso</figcaption>
+        </figure>
+        <figure class="slide" style="--pos:center 45%">
+          <img src="fotos/bandeja-mixta.jpg" alt="Bandeja mixta cubierta de carnes, papas, queso y salsas" loading="lazy" width="1200" height="1500">
+          <figcaption>Bandejita mixta</figcaption>
+        </figure>
+        <figure class="slide" style="--pos:center 72%">
+          <img src="fotos/guesa-completa.jpg" alt="Hamburguesa Güesa Completa con papas con queso en canasta" loading="lazy" width="1200" height="1432">
+          <figcaption>Güesa Completa</figcaption>
+        </figure>
+        <figure class="slide" style="--pos:center 62%">
+          <img src="fotos/alitas-bbq-honey.jpg" alt="Alitas bañadas en salsa BBQ y en salsa de queso con ajonjolí" loading="lazy" width="1200" height="1428">
+          <figcaption>Alitas BBQ y Honey</figcaption>
+        </figure>
+        <figure class="slide" style="--pos:center 62%">
+          <img src="fotos/guesa-tocino.jpg" alt="Hamburguesa Güesa Extra Tocino con papas" loading="lazy" width="1200" height="1500">
+          <figcaption>Güesa Extra Tocino</figcaption>
+        </figure>
+        <figure class="slide" style="--pos:center 56%">
+          <img src="fotos/whitemanna-combo-alitas.jpg" alt="Combo de hamburguesa White Manna con tres alitas y papas con queso" loading="lazy" width="1200" height="1500">
+          <figcaption>Combo White Manna + alitas</figcaption>
+        </figure>
+        <figure class="slide" style="--pos:center 58%">
+          <img src="fotos/burgers-nuevas.jpg" alt="Tres hamburguesas enormes con banderitas de Chichos sobre una bandeja roja con papas" loading="lazy" width="1200" height="1608">
+          <figcaption>Hamburguesas que no caben en una mano</figcaption>
+        </figure>
+      </div>
+
+      <div class="car-ctl">
+        <div class="dots-nav" id="dots" aria-label="Elegir foto"></div>
+        <div class="arrows">
+          <button class="arrow" id="prev" aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="arrow" id="next" aria-label="Foto siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESEÑAS ================= -->
+<!-- Texto de muestra: reemplazar por reseñas reales del negocio (Google Maps, Instagram) antes de publicar. -->
+<section class="section" id="resenas">
+  <div class="wrap">
+    <div class="section-head" data-anim="up">
+      <h2>Lo dicen quienes ya vinieron</h2>
+    </div>
+
+    <div class="reviews">
+      <article class="review feat" data-anim="tilt">
+        <div class="stars" role="img" aria-label="5 de 5 estrellas"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></div>
+        <span class="tag">Hamburguesas</span>
+        <blockquote>Pedí la doble carne pensando que era normal y me llegó una torre. Me tocó comerla con cuchillo y tenedor, y valió cada centavo.</blockquote>
+        <div class="who"><span class="av">D</span><div><b>Daniela M.</b><span>Pasaje</span></div></div>
+      </article>
+
+      <article class="review" data-anim="tilt" style="--d:.12s">
+        <div class="stars" role="img" aria-label="5 de 5 estrellas"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></div>
+        <span class="tag">Alitas</span>
+        <blockquote>Las alitas BBQ tienen una salsa que te hace chuparte los dedos. Pedimos más para el grupo y se acabaron en minutos.</blockquote>
+        <div class="who"><span class="av">C</span><div><b>Carlos J.</b><span>Pasaje</span></div></div>
+      </article>
+
+      <article class="review" data-anim="tilt" style="--d:.24s">
+        <div class="stars" role="img" aria-label="5 de 5 estrellas"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></div>
+        <span class="tag">Ambiente</span>
+        <blockquote>El local tiene un ambiente chévere, con murales y buena música. Fuimos en familia y los chicos no querían irse.</blockquote>
+        <div class="who"><span class="av">A</span><div><b>Andrea P.</b><span>Pasaje</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UBICACIÓN ================= -->
+<section class="section" id="ubicacion">
+  <div class="wrap">
+    <div class="section-head" data-anim="up">
+      <h2>Así llegas a Chichos</h2>
+      <p>Estamos en el centro de Pasaje, a una cuadra del Parque a la Madre.</p>
+    </div>
+
+    <div class="loc">
+      <div class="loc-card" data-anim="left">
+        <h3>Chichos Bar &amp; Grill</h3>
+        <div class="loc-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <span><b>Calle 4 de Agosto e Independencia</b>Una cuadra antes de llegar al Parque a la Madre. Pasaje, El Oro, Ecuador.</span>
+        </div>
+        <div class="loc-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span><b>17:30 a 23:30</b>Lunes y de miércoles a domingo. Martes cerrado.</span>
+        </div>
+        <div class="loc-actions">
+          <a class="btn btn-wa" href="https://www.google.com/maps/dir/?api=1&amp;destination=-3.3266896,-79.8117707" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8-8-2Z"/></svg>
+            Cómo llegar
+          </a>
+          <a class="btn btn-ghost" href="tel:+593983040897">Llamar</a>
+        </div>
+      </div>
+
+      <div class="map" id="map" data-anim="fade">
+        <iframe title="Mapa de Chichos Bar &amp; Grill en Pasaje" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://maps.google.com/maps?q=-3.3266896,-79.8117707&amp;hl=es&amp;z=17&amp;output=embed"></iframe>
+        <button class="map-lock" type="button" aria-label="Activar el mapa para moverlo"><span>Toca para mover el mapa</span></button>
+        <a class="map-open" href="https://maps.app.goo.gl/WPhW6V1WJQcpSUUR8" target="_blank" rel="noopener">Abrir en Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer" id="contacto">
+  <div class="wrap">
+    <div class="foot-top" data-anim="up">
+      <div>
+        <h2>Ven o pide hoy</h2>
+        <p>Estamos a una cuadra del Parque a la Madre. Si no puedes venir, te lo llevamos.</p>
+      </div>
+      <a class="btn btn-wa" href="https://wa.me/593983040897?text=Hola%20Chichos%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Ordenar por WhatsApp</a>
+    </div>
+
+    <h3 class="social-title" data-anim="up">Escríbenos o síguenos</h3>
+    <div class="social-cards">
+      <div data-anim="pop"><a class="soc wa" href="https://wa.me/593983040897" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg></span>
+        <span><b>WhatsApp</b><span>098 304 0897</span></span>
+      </a></div>
+      <div data-anim="pop" style="--d:.1s"><a class="soc ig" href="https://www.instagram.com/chichos0128" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-ig"/></svg></span>
+        <span><b>Instagram</b><span>@chichos0128</span></span>
+      </a></div>
+      <div data-anim="pop" style="--d:.2s"><a class="soc fb" href="https://www.facebook.com/chichosbargrill" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-fb"/></svg></span>
+        <span><b>Facebook</b><span>Chichos Bar &amp; Grill</span></span>
+      </a></div>
+    </div>
+
+    <div class="info">
+      <div data-anim="up">
+        <h3>Ubicación</h3>
+        <p><b>Calle 4 de Agosto e Independencia</b><br>Una cuadra antes de llegar al Parque a la Madre<br>Pasaje, El Oro, Ecuador</p>
+        <h3 style="margin-top:1.6rem">Teléfono</h3>
+        <p><a href="tel:+593983040897"><b>098 304 0897</b></a></p>
+      </div>
+      <div data-anim="up" style="--d:.1s">
+        <h3>Horarios</h3>
+        <ul class="hours">
+          <li><span>Lunes</span><b>17:30 a 23:30</b></li>
+          <li><span>Martes</span><b>Cerrado</b></li>
+          <li><span>Miércoles a domingo</span><b>17:30 a 23:30</b></li>
+        </ul>
+      </div>
+      <div data-anim="up" style="--d:.2s">
+        <h3>Delivery</h3>
+        <p class="delivery-note"><b>Contamos con Delivery a Domicilio.</b> Aceptamos pagos con DeUna, Transferencia y Efectivo.</p>
+      </div>
+    </div>
+
+    <div class="copy">
+      <span>© <span id="year">2026</span> Chichos Bar &amp; Grill</span>
+      <span>Drinks, wings, food</span>
+    </div>
+  </div>
+</footer>
+
+<a class="fab" id="fab" href="https://wa.me/593983040897?text=Hola%20Chichos%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" aria-label="Pide ya por WhatsApp">
+  <span class="fab-btn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg></span>
+  <span class="fab-bubble" aria-hidden="true">¡Pide ya!</span>
+</a>
+
+<div class="cartbar" id="cartbar" role="region" aria-label="Tu pedido">
+  <div class="cb-peek"><div class="cb-peek-in"><ul class="cb-list" id="cbList"></ul></div></div>
+  <div class="cb-row">
+    <button class="cb-toggle" id="cbToggle" type="button" aria-expanded="false" aria-controls="cbList" aria-label="Mostrar u ocultar los productos de tu pedido">
+      <span class="count" id="cbCount">0</span>
+      <span class="lbl">Tu pedido<small id="cbTotal">$0.00</small></span>
+      <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+    </button>
+    <button class="cb-go" id="cbGo" type="button" aria-haspopup="dialog">Ver pedido</button>
+    <button class="cb-x" id="cbX" type="button" aria-label="Minimizar la barra del pedido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </div>
+</div>
+<button class="cb-mini" id="cbMini" type="button" aria-label="Mostrar tu pedido">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+  <span class="count" id="cbMiniCount">0</span>
+</button>
+
+<div class="sheet-bg" id="sheetBg"></div>
+<aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" inert>
+  <div class="sheet-head">
+    <h2 id="sheetTitle">Tu pedido</h2>
+    <button class="x" id="sheetClose" type="button" aria-label="Cerrar pedido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </div>
+
+  <div class="sheet-body">
+    <div class="empty" id="empty">
+      <p>Aún no agregaste nada.<br>Elige algo del menú y aparecerá aquí.</p>
+      <button class="btn btn-wa" type="button" id="goMenu">Ver el menú</button>
+    </div>
+    <div id="orderBox">
+      <ul id="lines"></ul>
+      <form class="form" id="form" autocomplete="on" novalidate>
+        <label class="field">Tu nombre (opcional)
+          <input type="text" name="name" id="fName" placeholder="Ej. María" autocomplete="given-name" maxlength="40">
+        </label>
+        <fieldset class="field">
+          <legend>¿Cómo lo recibes?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="mode" value="local" checked><span>Retiro en el local</span></label>
+            <label class="chip"><input type="radio" name="mode" value="delivery"><span>Delivery a domicilio</span></label>
+          </div>
+        </fieldset>
+        <label class="field" id="addrField" hidden>Dirección y referencia
+          <input type="text" name="addr" id="fAddr" placeholder="Calle, número y una referencia" autocomplete="street-address" maxlength="120">
+          <span class="err" id="addrErr" role="alert"></span>
+        </label>
+        <fieldset class="field">
+          <legend>¿Cómo pagas?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="pay" value="Efectivo" checked><span>Efectivo</span></label>
+            <label class="chip"><input type="radio" name="pay" value="Transferencia"><span>Transferencia</span></label>
+            <label class="chip"><input type="radio" name="pay" value="DeUna"><span>DeUna</span></label>
+          </div>
+        </fieldset>
+        <label class="field">Notas (salsas, extras, bebidas)
+          <textarea name="notes" id="fNotes" rows="2" placeholder="Ej. salsa BBQ y una jamaica" maxlength="200"></textarea>
+        </label>
+      </form>
+    </div>
+  </div>
+
+  <div class="sheet-foot" id="sheetFoot">
+    <div class="sum"><span>Total</span><b id="sumTotal">$0.00</b></div>
+    <p class="fine" id="fine">Retiro en el local, sin costo extra.</p>
+    <a class="btn btn-wa" id="send" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg>
+      Enviar pedido por WhatsApp
+    </a>
+    <button class="linkbtn" type="button" id="clear">Vaciar pedido</button>
+  </div>
+</aside>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3ZM12 21.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 0 1-1.5-5.2C2.1 6.4 6.5 2 12 2c2.6 0 5.1 1 6.9 2.9a9.7 9.7 0 0 1 2.9 6.9c0 5.4-4.4 9.9-9.8 9.9Zm5.4-7.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1c-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3Z"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path d="M13.5 22v-8.2h2.8l.5-3.3h-3.3V8.4c0-.9.4-1.7 1.8-1.7h1.6V3.800S15.600 3.500 14.300 3.500c-2.700 0-4.400 1.600-4.400 4.500v2.500H7v3.300h2.900V22h3.600Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6L12 2Z"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  var doc = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  doc.classList.add('js');
+
+  /* ---- Menú móvil ---- */
+  var burger = document.querySelector('.burger');
+  var drawer = document.getElementById('drawer');
+  function setDrawer(open){
+    drawer.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
+  }
+  burger.addEventListener('click', function(){ setDrawer(!drawer.classList.contains('open')); });
+  drawer.addEventListener('click', function(e){ if (e.target.closest('a')) setDrawer(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setDrawer(false); });
+  window.matchMedia('(min-width:900px)').addEventListener('change', function(){ setDrawer(false); });
+
+  /* ---- Enlace activo ---- */
+  var links = document.querySelectorAll('.nav-links a');
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){
+        links.forEach(function(a){ a.classList.remove('is-active'); });
+        var a = map[en.target.id]; if (a) a.classList.add('is-active');
+      }
+    });
+  }, { rootMargin:'-45% 0px -50% 0px' });
+  ['inicio','menu','galeria','resenas','ubicacion','contacto'].forEach(function(id){
+    var el = document.getElementById(id); if (el) spy.observe(el);
+  });
+
+  /* ---- Abierto / cerrado (hora de Ecuador) ---- */
+  var status = document.getElementById('status');
+  var text = document.getElementById('status-text');
+  try{
+    var parts = new Intl.DateTimeFormat('en-US', { timeZone:'America/Guayaquil', weekday:'short', hour:'2-digit', minute:'2-digit', hour12:false }).formatToParts(new Date());
+    var get = function(t){ return parts.find(function(p){ return p.type === t; }).value; };
+    var day = get('weekday'), mins = (parseInt(get('hour'),10) % 24) * 60 + parseInt(get('minute'),10);
+    var open = day !== 'Tue' && mins >= 17*60+30 && mins < 23*60+30;
+    status.dataset.open = open;
+    text.textContent = open ? 'Abierto ahora, hasta las 23:30'
+      : (day === 'Tue' ? 'Hoy cerrado. Abrimos mañana a las 17:30' : 'Abrimos de 17:30 a 23:30');
+  }catch(e){}
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---- Revelado al hacer scroll ---- */
+  var items = document.querySelectorAll('[data-anim]');
+  if (reduce || !('IntersectionObserver' in window)){
+    items.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var rev = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('in'); rev.unobserve(en.target); }
+      });
+    }, { threshold:.15, rootMargin:'0px 0px -6% 0px' });
+    items.forEach(function(el){ rev.observe(el); });
+  }
+
+  /* ---- Barra de progreso ---- */
+  var bar = document.getElementById('progress');
+  var ticking = false;
+  function progress(){
+    var h = doc.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, scrollY / h) : 0) + ')';
+    ticking = false;
+  }
+  addEventListener('scroll', function(){ if (!ticking){ ticking = true; requestAnimationFrame(progress); } }, { passive:true });
+  progress();
+
+  /* ---- Menú interactivo y pedido ---- */
+  var WA_NUMBER = '593983040897';
+  // [id, nombre, precio en centavos, detalle opcional]
+  var MENU = [
+    { id:'burgers', tab:'Burgers', title:'Chichos Burgers', img:'burgers-nuevas.jpg', pos:'center 55%',
+      alt:'Tres hamburguesas Chichos con banderitas sobre una bandeja roja', items:[
+      ['sencilla','Sencilla',200],['completa','Completa',350],['extra-cheese','Extra Cheese',400],['extra-tocino','Extra Tocino',400],
+      ['chicken','Chicken Burguer',400],['doble','Doble Carne',600],['triple','Triple Carne',800],
+      ['white-manna','White Manna Burger',700],['juicy-lucy','Juicy Lucy Burger',700]] },
+    { id:'combos', tab:'Combos', title:'Mega Combos Rocky', img:'whitemanna-combo-alitas.jpg', pos:'center 55%',
+      alt:'Combo de hamburguesa con alitas y papas con queso', items:[
+      ['combo1','Combo 1',500,'Güesa sencilla + 3 alitas'],['combo2','Combo 2',600,'Güesa completa + 3 alitas'],
+      ['combo3','Combo 3',800,'Güesa doble carne + 3 alitas'],['combo4','Combo 4',1000,'Güesa triple carne + 3 alitas'],
+      ['combo5','Combo 5',600,'Papas gratinadas + 3 alitas']] },
+    { id:'costillas', tab:'Costillas', title:'MoroCheese y Costillas', img:'costillas-bbq.jpg', pos:'center 78%',
+      alt:'Costilla BBQ a la parrilla con papas fritas', items:[
+      ['moro-p','MoroCheese (Personal)',200],['moro-g','MoroCheese (Grande)',300],
+      ['costilla-pc','Costilla BBQ + PapasCheese',600],['costilla-mc','Costilla BBQ + MoroCheese',700]] },
+    { id:'bandejitas', tab:'Bandejitas', title:'Bandejitas', img:'bandeja-mixta.jpg', pos:'center 45%',
+      alt:'Bandejita mixta con carnes, papas y salsas', items:[
+      ['band-pollo','Bandejita de Pollo',400],['band-carne','Bandejita de Carne',400],
+      ['band-costilla','Bandejita de Costilla',600],['band-mixta','Bandejita Mixta',700]] },
+    { id:'alitas', tab:'Alitas', title:'Alitas', img:'alitas-bbq-honey.jpg', pos:'center 62%',
+      alt:'Alitas bañadas en salsa BBQ y en salsa de queso con ajonjolí', groups:[
+      ['Sencillas',[['as6','6 Alitas Sencillas',550],['as10','10 Alitas Sencillas',900],['as20','20 Alitas Sencillas',1600],['as30','30 Alitas Sencillas',2200]]],
+      ['Broaster',[['ab6','6 Alitas Broaster',600],['ab10','10 Alitas Broaster',1000],['ab20','20 Alitas Broaster',1700],['ab30','30 Alitas Broaster',2400]]]] },
+    { id:'papitas', tab:'Papitas y piqueos', title:'Papitas y piqueos', img:'alitas-bbq-papascheese.jpg', pos:'center 60%',
+      alt:'Alitas BBQ con papas con queso', groups:[
+      ['Papitas',[['p-fritas','Papas Fritas',150],['p-salchi','Salchipapa',200],['p-pollo','Papa con Pollo Broaster',300],['p-grat','Papas Gratinadas',350]]],
+      ['Piqueos',[['pq-boneless','Boneless de Pollo',300],['pq-popcorn','PopCorn de Camarón',400]]]] },
+    { id:'doggys', tab:'Doggys', title:'Doggys', img:'chillidog.jpg', pos:'center 66%',
+      alt:'Hot dog con queso cheddar derretido y tocino', items:[
+      ['d-sencillo','Doggy Sencillo',200],['d-completo','Doggy Completo',350],['d-choripan','Choripan',350],['d-chilli','Chillidog',400]] }
+  ];
+
+  var ITEM = {}, ORDER = [];
+  MENU.forEach(function(c){
+    var list = c.items || [].concat.apply([], c.groups.map(function(g){ return g[1]; }));
+    c.all = list;
+    list.forEach(function(it){ ITEM[it[0]] = { id:it[0], name:it[1], c:it[2], desc:it[3] || '' }; ORDER.push(it[0]); });
+  });
+  function money(c){ return '$' + (c / 100).toFixed(2); }
+
+  // El pedido empieza vacío cada vez que se abre o se recarga la página.
+  var cart = {};
+  try { localStorage.removeItem('chichos-cart'); } catch(e){}
+  function persist(){}
+  function count(){ return Object.keys(cart).reduce(function(s, k){ return s + cart[k]; }, 0); }
+  function total(){ return Object.keys(cart).reduce(function(s, k){ return s + cart[k] * ITEM[k].c; }, 0); }
+
+  var ICON_PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  var ICON_MINUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>';
+  function ctl(id){
+    var q = cart[id] || 0, n = ITEM[id].name;
+    if (!q) return '<button class="add" type="button" data-act="inc" data-id="' + id + '" aria-label="Agregar ' + n + '">' + ICON_PLUS + 'Agregar</button>';
+    return '<div class="step" role="group" aria-label="' + n + '">' +
+      '<button type="button" data-act="dec" data-id="' + id + '" aria-label="Quitar uno de ' + n + '">' + ICON_MINUS + '</button>' +
+      '<span class="q" aria-live="polite">' + q + '</span>' +
+      '<button type="button" data-act="inc" data-id="' + id + '" aria-label="Agregar uno más de ' + n + '">' + ICON_PLUS + '</button></div>';
+  }
+  function itemHTML(it, i){
+    return '<li class="item" data-id="' + it[0] + '" style="--i:' + i + '"><div class="item-name">' + it[1] +
+      (it[3] ? '<small>' + it[3] + '</small>' : '') + '</div><span class="price">' + money(it[2]) + '</span><div class="ctl">' + ctl(it[0]) + '</div></li>';
+  }
+
+  var tabsBox = document.getElementById('tabs'), panelsBox = document.getElementById('panels');
+  MENU.forEach(function(c, ci){
+    var min = Math.min.apply(null, c.all.map(function(i){ return i[2]; }));
+    var body = '', n = 0;
+    if (c.items) body = '<ul>' + c.items.map(function(it){ return itemHTML(it, n++); }).join('') + '</ul>';
+    else body = c.groups.map(function(g){ return '<p class="sub">' + g[0] + '</p><ul>' + g[1].map(function(it){ return itemHTML(it, n++); }).join('') + '</ul>'; }).join('');
+    var panel = document.createElement('div');
+    panel.className = 'menu-panel'; panel.id = 'p-' + c.id; panel.dataset.cat = c.id; panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', 't-' + c.id); panel.hidden = ci !== 0;
+    panel.innerHTML = '<button class="acc-head" type="button" aria-expanded="false" aria-controls="b-' + c.id + '">' +
+      '<img src="fotos/' + c.img + '" alt="" width="58" height="58" loading="lazy" style="--pos:' + c.pos + '">' +
+      '<span class="t">' + c.title + '<small>Desde ' + money(min) + '</small></span><span class="bdg" hidden></span>' +
+      '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>' +
+      '<div class="acc-body" id="b-' + c.id + '"><div class="acc-inner">' +
+      '<div class="menu-photo" style="--pos:' + c.pos + '"><img src="fotos/' + c.img + '" alt="' + c.alt + '" width="1200" height="1500" loading="lazy">' +
+      '<div class="from">Desde<b>' + money(min) + '</b></div></div><div class="menu-list"><h3>' + c.title + '</h3>' + body + '</div></div></div>';
+    panelsBox.appendChild(panel);
+    var t = document.createElement('button');
+    t.className = 'tab'; t.type = 'button'; t.id = 't-' + c.id; t.setAttribute('role', 'tab');
+    t.setAttribute('aria-controls', 'p-' + c.id); t.setAttribute('aria-selected', ci === 0); t.tabIndex = ci === 0 ? 0 : -1;
+    t.innerHTML = c.tab + '<span class="n" hidden></span>';
+    tabsBox.appendChild(t);
+  });
+
+  var tabs = [].slice.call(tabsBox.children), panelEls = [].slice.call(panelsBox.children);
+  var mq = window.matchMedia('(max-width:859px)');
+  var current = MENU[0].id;   // categoría abierta (en celular puede ser ninguna)
+  function apply(){
+    if (!current && !mq.matches) current = MENU[0].id;
+    panelEls.forEach(function(p){
+      var on = p.dataset.cat === current;
+      p.classList.toggle('open', on);
+      p.querySelector('.acc-head').setAttribute('aria-expanded', on);
+      p.hidden = mq.matches ? false : !on;
+    });
+    tabs.forEach(function(t){
+      var on = t.id === 't-' + current;
+      t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1;
+    });
+  }
+  function selectTab(tab, focus){
+    current = tab.id.slice(2); apply();
+    if (focus) tab.focus(); else tab.scrollIntoView({ inline:'center', block:'nearest', behavior: reduce ? 'auto' : 'smooth' });
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ selectTab(t); });
+    t.addEventListener('keydown', function(e){
+      var n = null;
+      if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (n){ e.preventDefault(); selectTab(n, true); }
+    });
+  });
+  panelEls.forEach(function(p){
+    p.querySelector('.acc-head').addEventListener('click', function(){
+      var wasOpen = p.classList.contains('open');
+      current = wasOpen ? null : p.dataset.cat; apply();
+      if (!wasOpen) setTimeout(function(){ p.scrollIntoView({ block:'start', behavior: reduce ? 'auto' : 'smooth' }); }, reduce ? 0 : 480);
+    });
+  });
+  mq.addEventListener('change', apply);
+  apply();
+
+  var cartbar = document.getElementById('cartbar');
+  var sheet = document.getElementById('sheet'), sheetBg = document.getElementById('sheetBg');
+  var linesEl = document.getElementById('lines');
+  var lastCount = count();
+
+  var peekEl = document.getElementById('cbList');
+  function renderLines(){
+    var html = ORDER.filter(function(id){ return cart[id]; }).map(function(id){
+      var it = ITEM[id], q = cart[id];
+      return '<li class="oline"><div class="info2">' + it.name + (it.desc ? '<small>' + it.desc + '</small>' : '') + '<small>' + money(it.c) + ' c/u</small></div>' +
+        '<div class="step" role="group" aria-label="' + it.name + '"><button type="button" data-act="dec" data-id="' + id + '" aria-label="Quitar uno de ' + it.name + '">' + ICON_MINUS + '</button>' +
+        '<span class="q" aria-live="polite">' + q + '</span><button type="button" data-act="inc" data-id="' + id + '" aria-label="Agregar uno más de ' + it.name + '">' + ICON_PLUS + '</button></div>' +
+        '<span class="sub">' + money(q * it.c) + '</span></li>';
+    }).join('');
+    linesEl.innerHTML = html; peekEl.innerHTML = html;
+  }
+
+  function sync(changedId){
+    document.querySelectorAll('.item').forEach(function(li){
+      var id = li.dataset.id, q = cart[id] || 0;
+      li.classList.toggle('has', q > 0);
+      var box = li.querySelector('.ctl'), had = box.querySelector('.q');
+      if ((q > 0) !== !!had || (had && had.textContent !== String(q))){
+        box.innerHTML = ctl(id);
+        var qe = box.querySelector('.q');
+        if (qe && id === changedId) qe.classList.add('bump');
+      }
+    });
+    MENU.forEach(function(c, i){
+      var n = c.all.reduce(function(s, it){ return s + (cart[it[0]] || 0); }, 0);
+      var b = tabs[i].querySelector('.n'); b.hidden = !n; b.textContent = n;
+      var b2 = panelEls[i].querySelector('.bdg'); b2.hidden = !n; b2.textContent = n;
+    });
+    var n = count(), t = total();
+    document.getElementById('cbCount').textContent = n;
+    document.getElementById('cbTotal').textContent = money(t);
+    document.getElementById('sumTotal').textContent = money(t);
+    cartbar.classList.toggle('on', n > 0);
+    document.body.classList.toggle('has-cart', n > 0);
+    if (n !== lastCount && n > 0){ cartbar.classList.remove('pop'); void cartbar.offsetWidth; cartbar.classList.add('pop'); }
+    lastCount = n;
+    document.getElementById('empty').hidden = n > 0;
+    document.getElementById('orderBox').hidden = n === 0;
+    document.getElementById('sheetFoot').hidden = n === 0;
+    renderLines(); buildLink();
+    document.getElementById('cbMiniCount').textContent = n;
+    if (n === 0) setBar(false, false);
+    if (n === 0 && sheet.classList.contains('open')) { /* se queda abierto mostrando el estado vacío */ }
+  }
+
+  function change(id, d){
+    var q = Math.max(0, Math.min(99, (cart[id] || 0) + d));
+    if (q) cart[id] = q; else delete cart[id];
+    if (d > 0 && document.body.classList.contains('cb-min')) setBar(false, false);
+    persist(); sync(id);
+  }
+  function onClick(e){
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var act = b.dataset.act, id = b.dataset.id;
+    change(id, act === 'inc' ? 1 : -1);
+    var scope = b.closest('#cbList') ? '#cbList' : (b.closest('#lines') ? '#lines' : '#panels');
+    var again = document.querySelector(scope + ' [data-act="' + (cart[id] ? act : 'inc') + '"][data-id="' + id + '"]');
+    if (again) again.focus();
+  }
+  panelsBox.addEventListener('click', onClick);
+  linesEl.addEventListener('click', onClick);
+  peekEl.addEventListener('click', onClick);
+
+  /* hoja del pedido */
+  var form = document.getElementById('form');
+  var addrField = document.getElementById('addrField'), fAddr = document.getElementById('fAddr');
+  var send = document.getElementById('send'), opener = null;
+  function mode(){ return form.elements.mode.value; }
+  function buildLink(){
+    var t = 'Hola Chichos, quiero hacer este pedido:\n\n';
+    ORDER.forEach(function(id){
+      if (!cart[id]) return; var it = ITEM[id];
+      t += '- ' + cart[id] + ' x ' + it.name + (it.desc ? ' (' + it.desc + ')' : '') + ': ' + money(cart[id] * it.c) + '\n';
+    });
+    t += '\nTotal: ' + money(total()) + (mode() === 'delivery' ? ' (el delivery se cobra aparte)' : '') + '\n';
+    var name = document.getElementById('fName').value.trim();
+    if (name) t += 'Nombre: ' + name + '\n';
+    t += mode() === 'delivery' ? 'Entrega: Delivery a domicilio\nDirección: ' + (fAddr.value.trim() || '(falta)') + '\n' : 'Entrega: Retiro en el local\n';
+    t += 'Pago: ' + form.elements.pay.value + '\n';
+    var notes = document.getElementById('fNotes').value.trim();
+    if (notes) t += 'Notas: ' + notes + '\n';
+    send.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(t);
+  }
+  form.addEventListener('input', function(){
+    var d = mode() === 'delivery';
+    addrField.hidden = !d;
+    document.getElementById('fine').textContent = d ? 'El delivery tiene costo adicional. Te confirmamos el valor por WhatsApp.' : 'Retiro en el local, sin costo extra.';
+    if (fAddr.value.trim()) document.getElementById('addrErr').textContent = '';
+    buildLink();
+  });
+  form.addEventListener('submit', function(e){ e.preventDefault(); });
+  send.addEventListener('click', function(e){
+    if (mode() === 'delivery' && !fAddr.value.trim()){
+      e.preventDefault();
+      document.getElementById('addrErr').textContent = 'Escribe tu dirección para el delivery.';
+      fAddr.focus();
+    }
+  });
+  document.getElementById('clear').addEventListener('click', function(){
+    cart = {}; persist(); sync();
+  });
+
+  function openSheet(){
+    opener = document.activeElement;
+    sheet.inert = false; sheet.classList.add('open'); sheetBg.classList.add('open');
+    document.body.classList.add('cart-open'); document.body.style.overflow = 'hidden';
+    setTimeout(function(){ document.getElementById('sheetClose').focus(); }, 60);
+  }
+  function closeSheet(){
+    if (!sheet.classList.contains('open')) return;
+    sheet.classList.remove('open'); sheetBg.classList.remove('open'); sheet.inert = true;
+    document.body.classList.remove('cart-open'); document.body.style.overflow = '';
+    if (opener && opener.focus) opener.focus();
+  }
+  document.getElementById('cbGo').addEventListener('click', openSheet);
+  document.getElementById('cbMini').addEventListener('click', function(){ setBar(false, false); });
+
+  /* barra del pedido: desplegar la lista y minimizar */
+  var cbToggle = document.getElementById('cbToggle');
+  function setBar(expanded, minimized){
+    cartbar.classList.toggle('expanded', expanded);
+    cbToggle.setAttribute('aria-expanded', expanded);
+    document.body.classList.toggle('cb-min', minimized);
+  }
+  cbToggle.addEventListener('click', function(){ setBar(!cartbar.classList.contains('expanded'), false); });
+  document.getElementById('cbX').addEventListener('click', function(){
+    setBar(false, true);
+    setTimeout(function(){ var m = document.getElementById('cbMini'); if (m.offsetParent) m.focus(); }, 50);
+  });
+  document.getElementById('sheetClose').addEventListener('click', closeSheet);
+  sheetBg.addEventListener('click', closeSheet);
+  document.getElementById('goMenu').addEventListener('click', function(){ closeSheet(); document.getElementById('menu').scrollIntoView(); });
+  document.addEventListener('keydown', function(e){
+    if (!sheet.classList.contains('open')) return;
+    if (e.key === 'Escape') closeSheet();
+    if (e.key === 'Tab'){
+      var f = [].slice.call(sheet.querySelectorAll('button, a[href], input, textarea')).filter(function(x){ return x.offsetParent !== null && !x.closest('[hidden]'); });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+  sync();
+
+/* ---- Carrusel de fotos ---- */
+  var track = document.getElementById('track');
+  var slides = [].slice.call(track.children);
+  var dotsBox = document.getElementById('dots');
+  var dots = slides.map(function(s, i){
+    var b = document.createElement('button');
+    b.className = 'dot'; b.type = 'button'; b.setAttribute('aria-label', 'Ir a la foto ' + (i + 1));
+    b.addEventListener('click', function(){ goTo(i); pauseAuto(); });
+    dotsBox.appendChild(b); return b;
+  });
+  function padLeft(){ return parseFloat(getComputedStyle(track).paddingLeft) || 0; }
+  function goTo(i){ track.scrollTo({ left: slides[i].offsetLeft - padLeft(), behavior: reduce ? 'auto' : 'smooth' }); }
+  function slideIdx(){
+    var x = track.scrollLeft + padLeft(), best = 0, d = Infinity;
+    slides.forEach(function(s, i){ var k = Math.abs(s.offsetLeft - x); if (k < d){ d = k; best = i; } });
+    var max = track.scrollWidth - track.clientWidth;
+    return track.scrollLeft >= max - 4 ? slides.length - 1 : best;
+  }
+  function paint(){
+    var c = slideIdx();
+    dots.forEach(function(b, i){ b.setAttribute('aria-current', i === c); });
+  }
+  function step(dir){
+    var max = track.scrollWidth - track.clientWidth;
+    if (dir > 0 && track.scrollLeft >= max - 4) goTo(0);
+    else if (dir < 0 && track.scrollLeft <= 4) track.scrollTo({ left: max, behavior: reduce ? 'auto' : 'smooth' });
+    else goTo(Math.max(0, Math.min(slides.length - 1, slideIdx() + dir)));
+  }
+  var ticking2 = false;
+  track.addEventListener('scroll', function(){ if (!ticking2){ ticking2 = true; requestAnimationFrame(function(){ paint(); ticking2 = false; }); } }, { passive:true });
+  document.getElementById('prev').addEventListener('click', function(){ step(-1); pauseAuto(); });
+  document.getElementById('next').addEventListener('click', function(){ step(1); pauseAuto(); });
+  track.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ e.preventDefault(); step(1); pauseAuto(); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); step(-1); pauseAuto(); }
+  });
+  paint();
+
+  // Avance automático: solo si el carrusel es visible y nadie lo está usando
+  var visible = false, pausedUntil = 0;
+  function pauseAuto(){ pausedUntil = Date.now() + 9000; }
+  ['pointerdown','touchstart','wheel','focusin'].forEach(function(ev){ track.addEventListener(ev, pauseAuto, { passive:true }); });
+  track.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') pausedUntil = Infinity; });
+  track.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse') pausedUntil = Date.now() + 2000; });
+  if (!reduce && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }, { threshold:.4 }).observe(track);
+    setInterval(function(){ if (visible && Date.now() > pausedUntil) step(1); }, 4200);
+  }
+
+  /* ---- Mapa: se activa al tocarlo para no atrapar el scroll ---- */
+  var mapBox = document.getElementById('map');
+  mapBox.querySelector('.map-lock').addEventListener('click', function(){ mapBox.classList.add('active'); });
+  document.addEventListener('pointerdown', function(e){ if (!mapBox.contains(e.target)) mapBox.classList.remove('active'); });
+
+  /* ---- Botón flotante de WhatsApp: el globo "¡Pide ya!" aparece y se va ---- */
+  var fab = document.getElementById('fab');
+  function talk(){
+    fab.classList.add('talk');
+    setTimeout(function(){ fab.classList.remove('talk'); }, 6000);
+  }
+  setTimeout(function(){ talk(); setInterval(talk, 20000); }, 2500);
+})();
+</script>
+</body>
+</html>
