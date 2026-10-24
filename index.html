@@ -596,9 +596,11 @@
     padding:.55rem .9rem; border-radius:999px;
   }
   .map.active .map-lock{ display:none; }
+  .pinico{ width:20px; height:20px; flex:none; }
   .map-open{
-    position:absolute; top:.8rem; right:.8rem; z-index:3; background:var(--mustard); color:var(--coal);
-    font-weight:700; font-size:.9rem; padding:.55rem .9rem; border-radius:999px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:.4rem;
+    position:absolute; left:50%; bottom:2.7rem; transform:translateX(-50%); z-index:3; background:var(--mustard); color:var(--coal);
+    font-weight:700; font-size:.9rem; padding:.55rem .9rem; border-radius:999px; text-decoration:none; white-space:nowrap;
   }
   @media (min-width:900px){
     .loc{ grid-template-columns:minmax(0, .8fr) minmax(0, 1.2fr); gap:2rem; align-items:stretch; }
@@ -730,7 +732,7 @@
     .loc-actions{ flex-direction:column; align-items:stretch; }
     .loc-actions .btn{ width:100%; }
     .map-lock{ justify-content:center; }
-    .map-open{ right:50%; transform:translateX(50%); top:auto; bottom:.8rem; }
+    .map-open{ min-height:44px; }
 
     .foot-top{ text-align:center; justify-items:center; }
     .foot-top p{ margin-inline:auto; }
@@ -971,7 +973,7 @@
         <iframe title="Mapa de Chichos Bar &amp; Grill en Pasaje" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           src="https://maps.google.com/maps?q=-3.3266896,-79.8117707&amp;hl=es&amp;z=17&amp;output=embed"></iframe>
         <button class="map-lock" type="button" aria-label="Activar el mapa para moverlo"><span>Toca para mover el mapa</span></button>
-        <a class="map-open" href="https://maps.app.goo.gl/WPhW6V1WJQcpSUUR8" target="_blank" rel="noopener">Abrir en Google Maps</a>
+        <a class="map-open" href="https://maps.app.goo.gl/WPhW6V1WJQcpSUUR8" target="_blank" rel="noopener"><svg class="pinico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7.5-6.6 7.5-12.2A7.5 7.5 0 0 0 4.5 9.8C4.5 15.400 12 22 12 22Z" fill="#c3261c"/><circle cx="12" cy="9.800" r="2.800" fill="#fff1d6"/></svg>Abrir en Maps</a>
       </div>
     </div>
   </div>
@@ -1285,7 +1287,7 @@
 
   var tabs = [].slice.call(tabsBox.children), panelEls = [].slice.call(panelsBox.children);
   var mq = window.matchMedia('(max-width:859px)');
-  var current = MENU[0].id;   // categoría abierta (en celular puede ser ninguna)
+  var current = mq.matches ? null : MENU[0].id;   // categoría abierta: en celular todas empiezan cerradas
   function apply(){
     if (!current && !mq.matches) current = MENU[0].id;
     panelEls.forEach(function(p){
